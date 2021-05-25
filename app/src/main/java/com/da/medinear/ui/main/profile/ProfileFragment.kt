@@ -59,6 +59,7 @@ class ProfileFragment : Fragment(), ProfileListener {
         viewModel.userName = user?.userName
         viewModel.password = user?.password
         viewModel.avatar = user?.avatar
+        viewModel.role = user?.role ?: 0
         binding.listener = this
         binding.viewModel = viewModel
 

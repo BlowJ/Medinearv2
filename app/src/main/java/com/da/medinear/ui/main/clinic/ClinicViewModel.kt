@@ -16,6 +16,7 @@ class ClinicViewModel : ViewModel() {
     var open = MutableLiveData<Long>()
     var close = MutableLiveData<Long>()
     var avatar = MutableLiveData<String>()
+    var url = ""
 
     val error = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
@@ -33,6 +34,7 @@ class ClinicViewModel : ViewModel() {
             clinic.location = address.value
             clinic.name = name
             clinic.phone = phone
+            clinic.website = url
             FirebaseDatabase.getInstance().getReference(Constance.FIREBASE_CLINIC).child(clinic.id.toString()).setValue(clinic)
             this@ClinicViewModel.success.postValue(true)
         }

@@ -1,6 +1,7 @@
 package com.da.medinear.ui.main.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.da.medinear.ui.main.clinic.ClinicActivity
 import com.da.medinear.ui.main.clinic_detail.ClinicDetailActivity
 import com.da.medinear.utils.ShareUtils
 import com.google.android.material.slider.RangeSlider
+import java.lang.Exception
 
 class HomeFragment : Fragment(), HomeListener, SearchView.OnQueryTextListener,
     RangeSlider.OnChangeListener {
@@ -81,5 +83,15 @@ class HomeFragment : Fragment(), HomeListener, SearchView.OnQueryTextListener,
     private fun filter() {
         val key = "${binding.search.query}-${binding.rangeStar.values[0]}-${binding.rangeStar.values[1]}"
         adapter.filter.filter(key)
+    }
+
+    override fun onMoreInformationClicked(url: String?) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 }

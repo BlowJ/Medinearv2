@@ -12,6 +12,7 @@ class ProfileViewModel : ViewModel() {
     var userName: String? = null
     var password: String? = null
     var avatar: String? = null
+    var role: Int = 0
 
     val error = MutableLiveData<String>()
     val success = MutableLiveData<Boolean>()
@@ -26,6 +27,7 @@ class ProfileViewModel : ViewModel() {
             name = this@ProfileViewModel.name
             password = this@ProfileViewModel.password
             avatar = this@ProfileViewModel.avatar
+            role = this@ProfileViewModel.role
         }
         FirebaseDatabase.getInstance().getReference(Constance.FIREBASE_USER).child(userName ?: "").setValue(user)
         success.postValue(true)
