@@ -92,12 +92,10 @@
 
                     <TextView
                         android:text="More information"
-                        android:textColor="@color/white"
                         android:textSize="14sp"
                         android:onClick="@{v -> listener.onMoreInformationClicked(viewModel.clinic.website)}"
                         android:layout_marginTop="10dp"
                         android:drawablePadding="10dp"
-                        android:drawableTint="@color/white"
                         android:drawableLeft="@drawable/ic_bowser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
