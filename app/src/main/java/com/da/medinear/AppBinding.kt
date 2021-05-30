@@ -1,6 +1,7 @@
 package com.da.medinear
 
 import android.net.Uri
+import android.text.Html
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -67,5 +68,12 @@ object AppBinding {
                     DialogUtils.dismissProgressDialog()
                 }
             }
+    }
+
+    @JvmStatic
+    @BindingAdapter("underline")
+    fun underLine(view: TextView, text: String) {
+        view.text = Html.fromHtml("<u>$text</u>")
+
     }
 }
