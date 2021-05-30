@@ -23,6 +23,9 @@ class ClinicActivity : AppCompatActivity(), ClinicListener {
     private lateinit var binding: ActivityAddClinicBinding
     private val viewModel: ClinicViewModel by viewModels()
 
+    /**
+     * Nhận vị t rí map trả về và hiển thị lên màn hình
+     * */
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
@@ -38,6 +41,7 @@ class ClinicActivity : AppCompatActivity(), ClinicListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Kiểm tra nếu là trường hợp edit thì hiển thị dữ liệu lên màn hình
         (intent.getSerializableExtra(Clinic::class.java.name) as? Clinic)?.apply {
             viewModel.avatar.value = avatar
             viewModel.open.value = open
@@ -52,11 +56,13 @@ class ClinicActivity : AppCompatActivity(), ClinicListener {
         binding.viewModel = viewModel
         binding.listener = this
 
+        // nhận thông báo cập nhập clinic thất bại
         viewModel.error.observe(this) {
             DialogUtils.dismissProgressDialog()
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         }
 
+        // nhận thông báo cập nhập clinic thành công
         viewModel.success.observe(this) {
             DialogUtils.dismissProgressDialog()
             Toast.makeText(this, "Update success", Toast.LENGTH_LONG).show()
@@ -77,6 +83,9 @@ class ClinicActivity : AppCompatActivity(), ClinicListener {
         resultLauncher.launch(intent)
     }
 
+    /**
+     * Mở chọn hình ảnh từ máy
+     * */
     override fun openGalleryClicked() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
@@ -88,6 +97,9 @@ class ClinicActivity : AppCompatActivity(), ClinicListener {
         viewModel.save()
     }
 
+    /**
+     * Chọn thời gian mở cửa và đóng cửa
+     * */
     private fun showTimePicker(target: MutableLiveData<Long>) {
         val calendar = Calendar.getInstance()
         val picker = TimePickerDialog(this,

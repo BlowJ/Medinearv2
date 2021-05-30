@@ -1,5 +1,6 @@
 package com.da.medinear.ui.main.home
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -52,15 +53,21 @@ class HomeFragment : Fragment(), HomeListener, SearchView.OnQueryTextListener,
         binding.rangeStar.addOnChangeListener(this)
     }
 
+    /**
+     * Thêm bệnh viện
+     * */
     override fun onAddClicked() {
         val intent = Intent(context, ClinicActivity::class.java)
         startActivity(intent)
     }
 
+    /**
+     * Mở màn detail
+     * */
     override fun onItemClinicClicked(item: Clinic) {
         val intent = Intent(context, ClinicDetailActivity::class.java)
         intent.putExtra(Clinic::class.java.name, item)
-        startActivity(intent)
+        startActivityForResult(intent, 0)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -72,26 +79,23 @@ class HomeFragment : Fragment(), HomeListener, SearchView.OnQueryTextListener,
         return true
     }
 
-    override fun onAddressItemClicked(item: Clinic) {
-        (activity as MainActivity).showMap(item)
-    }
-
     override fun onValueChange(slider: RangeSlider, value: Float, fromUser: Boolean) {
         filter()
     }
 
+    /**
+     * thưc hiện filter theo tên và số sao
+     * */
     private fun filter() {
-        val key = "${binding.search.query}-${binding.rangeStar.values[0]}-${binding.rangeStar.values[1]}"
+        val key =
+            "${binding.search.query}-${binding.rangeStar.values[0]}-${binding.rangeStar.values[1]}"
         adapter.filter.filter(key)
     }
 
-    override fun onMoreInformationClicked(url: String?) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
-            startActivity(intent)
-        } catch (ex: Exception) {
-            ex.printStackTrace()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            val item = data?.getSerializableExtra(Clinic::class.java.name) as Clinic
+            (activity as MainActivity).showMap(item)
         }
     }
 }

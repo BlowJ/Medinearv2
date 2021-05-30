@@ -27,7 +27,9 @@ class ClinicViewModel : ViewModel() {
             error.postValue("Data empty")
             return
         }
+        // upload hình ảnh lên firebase
         uploadImage {
+            // Nếu upload thành công thì cập nhập clinic
             clinic.avatar = it
             clinic.close = close.value
             clinic.open = open.value
@@ -40,6 +42,9 @@ class ClinicViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Xử lý upload hình ảnh
+     * */
     private fun uploadImage(callback: (avatar: String) -> Unit) {
         if (avatar.value == clinic.avatar) {
             callback(clinic.avatar ?: "")

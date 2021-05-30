@@ -22,6 +22,7 @@ class ProfileViewModel : ViewModel() {
             error.postValue("Data is blank")
             return
         }
+        // update thông tin user lên firebase
         user = User().apply {
             userName = this@ProfileViewModel.userName
             name = this@ProfileViewModel.name

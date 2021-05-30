@@ -5,6 +5,4 @@ import com.da.medinear.model.Clinic
 interface HomeListener {
     fun onAddClicked()
     fun onItemClinicClicked(item: Clinic)
-    fun onAddressItemClicked(item: Clinic)
-    fun onMoreInformationClicked(url: String?)
 }
